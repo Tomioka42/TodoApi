@@ -74,20 +74,21 @@ namespace TodoApi.Controllers
         }
 
         //DELETE api/<TodosController>/5
-        //[HttpDelete("{id}")]
-        //public IActionResult Delete(int id)
-        //{
-        //    var todoToRemove = context.Todos.FirstOrDefault(t => t.Id == id);
-        //    if (todoToRemove == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    else
-        //    {
-        //        context.Todos.ExecuteDelete(todoToRemove);
+        [HttpDelete("{id}")]
+        public ActionResult<TodosModel> Delete(int id)
+        {
+            TodosModel? todoToRemove = context.Todos.FirstOrDefault(t => t.Id == id);
+            if (todoToRemove == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                context.Todos.Remove(todoToRemove);
+                context.SaveChanges();
 
-        //        return NoContent();
-        //    }
-        //}
+                return Ok(todoToRemove);
+            }
+        }
     }
 }
